@@ -41,45 +41,38 @@ class _LoginScreenState extends State<LoginScreen> {
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           child: Center(
-            child: BlocBuilder<LoginBloc, LoginState>(
-              builder: (context, state) {
-                if (state is LoginInitial) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      FlatButton(
-                        color: Colors.pink,
-                        onPressed: () {
-                          _loginBloc.add(LoginFromGooglePressed());
-                        },
-                        child: Container(
-                          height: 50,
-                          width: 200,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Icon(
-                                FontAwesomeIcons.google,
-                                color: Colors.white,
-                              ),
-                              Text('Login with Google')
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                } else if (state is LoginSuccess) {
-                  return HomeScreen(
-                    user: state.user,
-                  );
-                } else {
-                  return Container(
-                    child: Text('Unknown State. $state'),
-                  );
+            child: BlocListener<LoginBloc, LoginState>(
+              listener: (context, state) {
+                if (state is LoginSuccess) {
+                  BlocProvider.of<AuthenticationBloc>(context).add(LoggedIn());
                 }
               },
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  FlatButton(
+                    color: Colors.pink,
+                    onPressed: () {
+                      _loginBloc.add(LoginFromGooglePressed());
+                    },
+                    child: Container(
+                      height: 50,
+                      width: 200,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(
+                            FontAwesomeIcons.google,
+                            color: Colors.white,
+                          ),
+                          Text('Login with Google')
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
