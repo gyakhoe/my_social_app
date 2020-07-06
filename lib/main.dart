@@ -53,7 +53,7 @@ class App extends StatelessWidget {
 
     if (state is AuthenticationSuccess) {
       return HomeScreen(
-        name: state.displayName,
+        user: state.user,
       );
     }
 

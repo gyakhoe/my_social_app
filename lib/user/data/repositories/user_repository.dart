@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:my_social_app/common/utils/user_utilities.dart';
+import 'package:my_social_app/user/data/models/user.dart';
 
 class UserRepository {
   final FirebaseAuth _firebaseAuth;
@@ -9,7 +11,7 @@ class UserRepository {
       : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance,
         _googleSignIn = googleSignin ?? GoogleSignIn();
 
-  Future<FirebaseUser> signInWithGoogle() async {
+  Future<User> signInWithGoogle() async {
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     final GoogleSignInAuthentication googleAuth =
         await googleUser.authentication;
@@ -18,7 +20,8 @@ class UserRepository {
       idToken: googleAuth.idToken,
     );
     await _firebaseAuth.signInWithCredential(credential);
-    return _firebaseAuth.currentUser();
+    return UserUtilities.convertFirebaseUserToUser(
+        firebaseUser: await _firebaseAuth.currentUser());
   }
 
   Future<void> signOut() async {
@@ -33,7 +36,8 @@ class UserRepository {
     return currentUser != null;
   }
 
-  Future<String> getUser() async {
-    return (await _firebaseAuth.currentUser()).email;
+  Future<User> getUser() async {
+    return (UserUtilities.convertFirebaseUserToUser(
+        firebaseUser: await _firebaseAuth.currentUser()));
   }
 }
