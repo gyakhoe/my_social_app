@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_social_app/authentication/bloc/authentication_bloc.dart';
+import 'package:my_social_app/chat/layout/chat_page.dart';
+import 'package:my_social_app/common/layout/custom_app_bar.dart';
+import 'package:my_social_app/gallery/layout/gallery_page.dart';
+import 'package:my_social_app/post/layout/post_page.dart';
+import 'package:my_social_app/profile/layout/profile_page.dart';
 import 'package:my_social_app/user/data/models/user.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   final User user;
 
   const HomeScreen({
@@ -12,30 +15,60 @@ class HomeScreen extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int _pageIndex = 0;
+  final _pages = [
+    PostPage(),
+    ChatPage(),
+    GalleryPage(),
+    ProfilePage(),
+  ];
+
+  final titles = ['Post', 'Chat', 'Gallery', 'Profile'];
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Home'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.exit_to_app),
-            onPressed: () {
-              BlocProvider.of<AuthenticationBloc>(context)
-                ..add(AuthenticationLoggedOut());
-            },
+      appBar: CustomAppBar(
+        title: titles[_pageIndex],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _pageIndex,
+        onTap: (selectedIndex) {
+          setState(() {
+            _pageIndex = selectedIndex;
+          });
+        },
+        showSelectedLabels: true,
+        showUnselectedLabels: false,
+        unselectedItemColor: Colors.grey,
+        selectedItemColor: Theme.of(context).primaryColor,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add_to_photos),
+            title: Text('Post'),
+            activeIcon: Icon(Icons.photo),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.chat_bubble),
+            title: Text('Chat'),
+            activeIcon: Icon(Icons.chat),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add),
+            title: Text('Add'),
+            activeIcon: Icon(Icons.add_box),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_outline),
+            title: Text('Profile'),
+            activeIcon: Icon(Icons.person),
           ),
         ],
       ),
-      body: Center(
-        child: Column(
-          children: <Widget>[
-            Text(user.uid),
-            Text(user.email),
-            Text(user.displayName),
-            Text(user.photoUrl),
-          ],
-        ),
-      ),
+      body: _pages[_pageIndex],
     );
   }
 }
