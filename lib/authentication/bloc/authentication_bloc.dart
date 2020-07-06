@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
+import 'package:my_social_app/user/data/models/user.dart';
 import 'package:my_social_app/user/data/repositories/user_repository.dart';
 
 part 'authentication_event.dart';
@@ -33,8 +34,8 @@ class AuthenticationBloc
   Stream<AuthenticationState> _mapAuthenticationStartedToState() async* {
     final isSignedIn = await _userRepository.isSignedIn();
     if (isSignedIn) {
-      final name = await _userRepository.getUser();
-      yield AuthenticationSuccess(name);
+      final User user = await _userRepository.getUser();
+      yield AuthenticationSuccess(user);
     } else {
       yield AuthenticationFailure();
     }

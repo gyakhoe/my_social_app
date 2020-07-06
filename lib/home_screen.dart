@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_social_app/authentication/bloc/authentication_bloc.dart';
+import 'package:my_social_app/user/data/models/user.dart';
 
 class HomeScreen extends StatelessWidget {
-  final String name;
+  final User user;
 
   const HomeScreen({
     Key key,
-    @required this.name,
+    @required this.user,
   }) : super(key: key);
 
   @override
@@ -26,7 +27,14 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
       body: Center(
-        child: Text('Welcome $name'),
+        child: Column(
+          children: <Widget>[
+            Text(user.uid),
+            Text(user.email),
+            Text(user.displayName),
+            Text(user.photoUrl),
+          ],
+        ),
       ),
     );
   }
