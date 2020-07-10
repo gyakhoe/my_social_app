@@ -7,40 +7,30 @@ abstract class PostState extends Equatable {
 class PostInitial extends PostState {
   @override
   List<Object> get props => [];
+  @override
+  String toString() => 'PostInitial';
 }
 
-class PostSelectSuccess extends PostState {
-  final File selectedImage;
-
-  PostSelectSuccess({
-    @required this.selectedImage,
-  });
-
+class PostLoadInProgress extends PostState {
   @override
   List<Object> get props => [];
+  @override
+  String toString() => 'PostLoadInProgress';
 }
 
-class PostSelectCancle extends PostState {
+class PostLoadSuccess extends PostState {
+  final List<Post> posts;
+  PostLoadSuccess(this.posts);
   @override
-  List<Object> get props => [];
+  List<Object> get props => [posts];
+
+  @override
+  String toString() => 'PostLoadSuccess ${posts.length}';
 }
 
-class PostSelectFailure extends PostState {
+class PostLoadFailure extends PostState {
   @override
   List<Object> get props => [];
-}
-
-class PostSubmitSuccess extends PostState {
   @override
-  List<Object> get props => [];
-}
-
-class PostSubmitFailure extends PostState {
-  @override
-  List<Object> get props => [];
-}
-
-class PostSubmitInProgress extends PostState {
-  @override
-  List<Object> get props => [];
+  String toString() => 'PostLoadFailure';
 }

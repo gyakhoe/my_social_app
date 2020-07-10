@@ -28,4 +28,10 @@ class PostRepository {
     String response = await firebaseRepository.uploadPostData(post);
     return response;
   }
+
+  Future<List<Post>> fetchPost() async {
+    FirebaseRepository firebaseRepository = FirebaseRepository();
+    List<Post> posts = await firebaseRepository.fetchPosts();
+    return posts.toList();
+  }
 }
