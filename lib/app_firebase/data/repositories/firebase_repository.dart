@@ -65,4 +65,14 @@ class FirebaseRepository {
       return actionMessageError;
     }
   }
+
+  Future<List<Post>> fetchPosts() async {
+    QuerySnapshot snapshot = await _firestore.collection('post').getDocuments();
+    List<Post> posts =
+        snapshot.documents.map((e) => Post.fromMap(e.data)).toList();
+    for (Post post in posts) {
+      print(post.toString());
+    }
+    return posts;
+  }
 }

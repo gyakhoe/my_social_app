@@ -9,19 +9,24 @@ import 'package:my_social_app/post/data/models/post.dart';
 import 'package:my_social_app/post/data/repositories/post_repository.dart';
 import 'package:my_social_app/user/data/repositories/user_repository.dart';
 
-part 'post_event.dart';
-part 'post_state.dart';
+part 'addpost_event.dart';
+part 'addpost_state.dart';
 
-class PostBloc extends Bloc<PostEvent, PostState> {
+class AddpostBloc extends Bloc<AddpostEvent, AddpostState> {
   final PostRepository _postRepository;
-  PostBloc({@required PostRepository postRepository})
-      : assert(postRepository != null),
+  final UserRepository _userRepository;
+  AddpostBloc({
+    @required PostRepository postRepository,
+    @required UserRepository userRepository,
+  })  : assert(postRepository != null),
+        assert(userRepository != null),
         _postRepository = postRepository,
-        super(PostInitial());
+        _userRepository = userRepository,
+        super(AddpostInitial());
 
   @override
-  Stream<PostState> mapEventToState(
-    PostEvent event,
+  Stream<AddpostState> mapEventToState(
+    AddpostEvent event,
   ) async* {
     if (event is PostAddPressed) {
       yield* _mapPostAddPressedToState();
@@ -29,19 +34,17 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       yield* _mapPostAddCancelledToState();
     } else if (event is PostSubmitPressed) {
       yield* _mapPostSubmitPressedToState(event);
-    } else if (event is PostStarted) {
-      yield* _mapPostStartedToState();
     }
   }
 
-  Stream<PostState> _mapPostAddPressedToState() async* {
+  Stream<AddpostState> _mapPostAddPressedToState() async* {
     File selectedImage = await _postRepository.getImage();
     yield selectedImage == null
         ? PostSelectFailure()
         : PostSelectSuccess(selectedImage: selectedImage);
   }
 
-  Stream<PostState> _mapPostSubmitPressedToState(
+  Stream<AddpostState> _mapPostSubmitPressedToState(
       PostSubmitPressed event) async* {
     yield PostSubmitInProgress();
     final user = await UserRepository().getUser();
@@ -72,16 +75,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     }
   }
 
-  Stream<PostState> _mapPostAddCancelledToState() async* {
+  Stream<AddpostState> _mapPostAddCancelledToState() async* {
     yield PostSelectCancel();
-  }
-
-  Stream<PostState> _mapPostStartedToState() async* {
-    List<Post> posts = await _postRepository.fetchPost();
-    if (posts != null) {
-      yield PostLoadSuccess(posts);
-    } else {
-      yield PostLoadFailure();
-    }
   }
 }

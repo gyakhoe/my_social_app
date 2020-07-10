@@ -7,6 +7,8 @@ abstract class PostState extends Equatable {
 class PostInitial extends PostState {
   @override
   List<Object> get props => [];
+  @override
+  String toString() => 'PostInitial';
 }
 
 class PostSelectSuccess extends PostState {
@@ -18,29 +20,67 @@ class PostSelectSuccess extends PostState {
 
   @override
   List<Object> get props => [];
+
+  @override
+  String toString() => 'PostSelectSuccess';
 }
 
-class PostSelectCancle extends PostState {
+class PostSelectCancel extends PostState {
   @override
   List<Object> get props => [];
+  @override
+  String toString() => 'PostSubmitCancle';
 }
 
 class PostSelectFailure extends PostState {
   @override
   List<Object> get props => [];
+  @override
+  String toString() => 'PostSubmitFailure';
 }
 
 class PostSubmitSuccess extends PostState {
   @override
   List<Object> get props => [];
+  @override
+  String toString() => 'PostSubmitSuccess';
 }
 
 class PostSubmitFailure extends PostState {
   @override
   List<Object> get props => [];
+  @override
+  String toString() => 'PostSubmitFailure';
 }
 
 class PostSubmitInProgress extends PostState {
   @override
   List<Object> get props => [];
+
+  @override
+  String toString() => 'PostSubmitInProgress';
+}
+
+class PostLoadInProgress extends PostState {
+  @override
+  List<Object> get props => [];
+  @override
+  String toString() => 'PostLoadInProgress';
+}
+
+class PostLoadSuccess extends PostState {
+  final List<Post> posts;
+  PostLoadSuccess(this.posts);
+  @override
+  List<Object> get props => [posts];
+
+  @override
+  String toString() => 'PostLoadSuccess ${posts.length}';
+}
+
+class PostLoadFailure extends PostState {
+  @override
+  List<Object> get props => [];
+  @override
+  String toString() => 'PostLoadFailure';
 }

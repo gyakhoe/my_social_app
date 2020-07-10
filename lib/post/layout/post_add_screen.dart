@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_social_app/common/layout/custom_app_bar.dart';
 import 'package:my_social_app/post/bloc/post_bloc.dart';
 
-class PostAddScreen extends StatelessWidget {
+class PostAddScreen extends StatefulWidget {
   final File _selectedImage;
   const PostAddScreen({
     Key key,
@@ -14,8 +14,26 @@ class PostAddScreen extends StatelessWidget {
         super(key: key);
 
   @override
+  _PostAddScreenState createState() => _PostAddScreenState();
+}
+
+class _PostAddScreenState extends State<PostAddScreen> {
+  TextEditingController captionController;
+
+  @override
+  void initState() {
+    super.initState();
+    captionController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    captionController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final TextEditingController captionController = TextEditingController();
     return Scaffold(
       appBar: CustomAppBar(
         leading: FlatButton(
@@ -43,7 +61,7 @@ class PostAddScreen extends StatelessWidget {
             BlocProvider.of<PostBloc>(context).add(
               PostSubmitPressed(
                 caption: caption,
-                image: _selectedImage,
+                image: widget._selectedImage,
               ),
             );
             Navigator.pop(context);
@@ -61,7 +79,7 @@ class PostAddScreen extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 color: Colors.pink,
                 child: Image.file(
-                  _selectedImage,
+                  widget._selectedImage,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -69,7 +87,7 @@ class PostAddScreen extends StatelessWidget {
                 height: 10,
               ),
               TextField(
-                onSubmitted: (value) => captionController.text,
+                controller: captionController,
                 decoration: InputDecoration(
                   hintText: 'Caption',
                   border: OutlineInputBorder(

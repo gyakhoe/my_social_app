@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_social_app/post/bloc/post_bloc.dart';
 import 'package:my_social_app/post/layout/post_add_screen.dart';
+import 'package:my_social_app/post/layout/widgets/post_widget.dart';
 
 class PostHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size screen = MediaQuery.of(context).size;
+
     return Container(
       height: screen.height,
       width: screen.width,
@@ -15,6 +17,13 @@ class PostHomePage extends StatelessWidget {
         child: Stack(
           alignment: Alignment.center,
           children: <Widget>[
+            Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              child: BlocBuilder<PostBloc, PostState>(
+                builder: _postBlocBuilder,
+              ),
+            ),
             Align(
               alignment: Alignment.bottomRight,
               child: Container(
@@ -47,7 +56,7 @@ class PostHomePage extends StatelessWidget {
                   selectedImage: state.selectedImage,
                 )),
           ));
-    } else if (state is PostSelectCancle) {
+    } else if (state is PostSelectCancel) {
       print('User has cancelled post add');
     } else if (state is PostSelectFailure) {
       print('User selection is not avilable');
@@ -70,9 +79,6 @@ class PostHomePage extends StatelessWidget {
         Icon(Icons.ac_unit),
         Text('Post Uplaoded.'),
       );
-    } else {
-      print('unknown state is called');
-      _showDialog(context, Icon(Icons.device_unknown), Text('Upload failed.'));
     }
   }
 
@@ -93,5 +99,32 @@ class PostHomePage extends StatelessWidget {
           backgroundColor: Colors.blueGrey,
         ),
       );
+  }
+
+  Widget _postBlocBuilder(context, state) {
+    if (state is PostLoadInProgress) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    } else if (state is PostLoadFailure) {
+      return Center(child: Text('PostFailed to Load'));
+    } else if (state is PostLoadSuccess) {
+      return ListView.builder(
+          itemCount: state.posts.length,
+          itemBuilder: (context, index) => PostWidget(
+                post: state.posts.elementAt(index),
+              ));
+    } else if (state is PostInitial) {
+      print('Post state is initial');
+      BlocProvider.of<PostBloc>(context)..add(PostStarted());
+      return _buildPostInitialLoadIndicator();
+    } else {
+      BlocProvider.of<PostBloc>(context)..add(PostStarted());
+      return Center(child: Text('No State found'));
+    }
+  }
+
+  Widget _buildPostInitialLoadIndicator() {
+    return Center(child: CircularProgressIndicator());
   }
 }
