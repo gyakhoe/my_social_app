@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/chat/layout/chat_page.dart';
 import 'package:my_social_app/common/layout/custom_app_bar.dart';
-import 'package:my_social_app/gallery/layout/gallery_page.dart';
-import 'package:my_social_app/post/layout/post_page.dart';
+import 'package:my_social_app/post/layout/post_provider_page.dart';
 import 'package:my_social_app/profile/layout/profile_page.dart';
 import 'package:my_social_app/user/data/models/user.dart';
 
@@ -21,13 +20,12 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _pageIndex = 0;
   final _pages = [
-    PostPage(),
+    PostProviderPage(),
     ChatPage(),
-    GalleryPage(),
     ProfilePage(),
   ];
 
-  final titles = ['Post', 'Chat', 'Gallery', 'Profile'];
+  final titles = ['Post', 'Chat', 'Profile'];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,11 +53,6 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: Icon(Icons.chat_bubble),
             title: Text('Chat'),
             activeIcon: Icon(Icons.chat),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add),
-            title: Text('Add'),
-            activeIcon: Icon(Icons.add_box),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person_outline),

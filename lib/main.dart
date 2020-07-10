@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_social_app/app_firebase/data/repositories/firebase_repository.dart';
 import 'package:my_social_app/authentication/bloc/authentication_bloc.dart';
 import 'package:my_social_app/common/observers/app_bloc_obeserver.dart';
 import 'package:my_social_app/home_screen.dart';
@@ -12,19 +13,29 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = AppBlocObserver();
   final UserRepository userRepository = UserRepository();
+  final FirebaseRepository firebaseRepository = FirebaseRepository();
   runApp(
     BlocProvider(
       create: (context) => AuthenticationBloc(userRepository: userRepository),
-      child: App(userRepository: userRepository),
+      child: App(
+        userRepository: userRepository,
+        firebaseRepository: firebaseRepository,
+      ),
     ),
   );
 }
 
 class App extends StatelessWidget {
   final UserRepository _userRepository;
-  const App({Key key, UserRepository userRepository})
-      : assert(userRepository != null),
+  final FirebaseRepository _firebaseRepository;
+  const App({
+    Key key,
+    @required UserRepository userRepository,
+    @required FirebaseRepository firebaseRepository,
+  })  : assert(userRepository != null),
+        assert(firebaseRepository != null),
         _userRepository = userRepository,
+        _firebaseRepository = firebaseRepository,
         super(key: key);
 
   @override
@@ -60,6 +71,7 @@ class App extends StatelessWidget {
     if (state is AuthenticationFailure) {
       return LoginScreen(
         userRepository: _userRepository,
+        firebaseRepository: _firebaseRepository,
       );
     }
     return Container();

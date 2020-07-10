@@ -7,13 +7,20 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:my_social_app/app_firebase/data/repositories/firebase_repository.dart';
 
 import 'package:my_social_app/main.dart';
+import 'package:my_social_app/user/data/repositories/user_repository.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(App());
+    FirebaseRepository firebaseRepository = FirebaseRepository();
+    UserRepository userRepository = UserRepository();
+    await tester.pumpWidget(App(
+      firebaseRepository: firebaseRepository,
+      userRepository: userRepository,
+    ));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);
