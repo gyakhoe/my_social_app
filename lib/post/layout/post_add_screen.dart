@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_social_app/common/layout/custom_app_bar.dart';
-import 'package:my_social_app/post/bloc/post_bloc.dart';
+import 'package:my_social_app/post/bloc/addpost_bloc.dart';
 
 class PostAddScreen extends StatefulWidget {
   final File _selectedImage;
@@ -44,7 +44,7 @@ class _PostAddScreenState extends State<PostAddScreen> {
             ),
           ),
           onPressed: () {
-            BlocProvider.of<PostBloc>(context).add(PostAddCancelled());
+            BlocProvider.of<AddpostBloc>(context).add(PostAddCancelled());
             Navigator.pop(context);
           },
         ),
@@ -58,7 +58,7 @@ class _PostAddScreenState extends State<PostAddScreen> {
           ),
           onPressed: () {
             final caption = captionController.text ?? '';
-            BlocProvider.of<PostBloc>(context).add(
+            BlocProvider.of<AddpostBloc>(context).add(
               PostSubmitPressed(
                 caption: caption,
                 image: widget._selectedImage,

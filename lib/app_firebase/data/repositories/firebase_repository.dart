@@ -10,7 +10,7 @@ import 'package:my_social_app/user/data/models/user.dart';
 class FirebaseRepository {
   Firestore _firestore = Firestore.instance;
 
-  bool _isLoggedIn() {
+  bool isLoggedIn() {
     return FirebaseAuth.instance.currentUser() != null ? true : false;
   }
 
@@ -67,7 +67,10 @@ class FirebaseRepository {
   }
 
   Future<List<Post>> fetchPosts() async {
-    QuerySnapshot snapshot = await _firestore.collection('post').getDocuments();
+    QuerySnapshot snapshot = await _firestore
+        .collection('post')
+        .orderBy('creationDateTime', descending: true)
+        .getDocuments();
     List<Post> posts =
         snapshot.documents.map((e) => Post.fromMap(e.data)).toList();
     for (Post post in posts) {

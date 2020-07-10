@@ -46,8 +46,9 @@ class AddpostBloc extends Bloc<AddpostEvent, AddpostState> {
 
   Stream<AddpostState> _mapPostSubmitPressedToState(
       PostSubmitPressed event) async* {
+    print('post submit is called');
     yield PostSubmitInProgress();
-    final user = await UserRepository().getUser();
+    final user = await _userRepository.getUser();
     String imageDownloadUrl =
         await _postRepository.uploadPhotoIntoFireStore(image: event.image);
     if (imageDownloadUrl != actionMessageError ||

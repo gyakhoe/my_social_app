@@ -15,7 +15,6 @@ class PostWidget extends StatelessWidget {
       child: Container(
           height: MediaQuery.of(context).size.height * 0.7,
           width: MediaQuery.of(context).size.width,
-          color: Colors.teal,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -65,8 +64,9 @@ class PostWidget extends StatelessWidget {
       child: Container(
         height: double.infinity,
         width: double.infinity,
-        child: Image.network(
-          _post.photoUrl,
+        child: FadeInImage(
+          placeholder: AssetImage('assets/images/Curve-Loading.gif'),
+          image: NetworkImage(_post.photoUrl),
           fit: BoxFit.cover,
         ),
       ),

@@ -32,6 +32,6 @@ class PostRepository {
   Future<List<Post>> fetchPost() async {
     FirebaseRepository firebaseRepository = FirebaseRepository();
     List<Post> posts = await firebaseRepository.fetchPosts();
-    return posts.reversed.toList();
+    return posts.toList();
   }
 }

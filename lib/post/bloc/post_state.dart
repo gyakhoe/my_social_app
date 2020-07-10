@@ -11,56 +11,6 @@ class PostInitial extends PostState {
   String toString() => 'PostInitial';
 }
 
-class PostSelectSuccess extends PostState {
-  final File selectedImage;
-
-  PostSelectSuccess({
-    @required this.selectedImage,
-  });
-
-  @override
-  List<Object> get props => [];
-
-  @override
-  String toString() => 'PostSelectSuccess';
-}
-
-class PostSelectCancel extends PostState {
-  @override
-  List<Object> get props => [];
-  @override
-  String toString() => 'PostSubmitCancle';
-}
-
-class PostSelectFailure extends PostState {
-  @override
-  List<Object> get props => [];
-  @override
-  String toString() => 'PostSubmitFailure';
-}
-
-class PostSubmitSuccess extends PostState {
-  @override
-  List<Object> get props => [];
-  @override
-  String toString() => 'PostSubmitSuccess';
-}
-
-class PostSubmitFailure extends PostState {
-  @override
-  List<Object> get props => [];
-  @override
-  String toString() => 'PostSubmitFailure';
-}
-
-class PostSubmitInProgress extends PostState {
-  @override
-  List<Object> get props => [];
-
-  @override
-  String toString() => 'PostSubmitInProgress';
-}
-
 class PostLoadInProgress extends PostState {
   @override
   List<Object> get props => [];
