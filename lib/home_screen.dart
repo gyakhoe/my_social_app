@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/chat/layout/chat_page.dart';
+import 'package:my_social_app/chat/layout/chat_provider_page.dart';
 import 'package:my_social_app/common/layout/custom_app_bar.dart';
 import 'package:my_social_app/post/layout/post_provider_page.dart';
 import 'package:my_social_app/profile/layout/profile_page.dart';
@@ -21,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int _pageIndex = 0;
   final _pages = [
     PostProviderPage(),
-    ChatPage(),
+    ChatProviderPage(),
     ProfilePage(),
   ];
 

@@ -46,13 +46,12 @@ class PostHomePage extends StatelessWidget {
   _postBlocListener(context, state) {
     print('listener is called');
     if (state is PostSelectSuccess) {
-      final addPostBloc = BlocProvider.of<AddpostBloc>(context);
       print('Post image is selected by user');
       Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => BlocProvider.value(
-                value: addPostBloc,
+            builder: (newContext) => BlocProvider.value(
+                value: BlocProvider.of<AddpostBloc>(context),
                 child: PostAddScreen(
                   selectedImage: state.selectedImage,
                 )),
