@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_social_app/chat/layout/chat_provider_page.dart';
 import 'package:my_social_app/common/layout/custom_app_bar.dart';
 import 'package:my_social_app/post/layout/post_provider_page.dart';
-import 'package:my_social_app/profile/layout/profile_page.dart';
+import 'package:my_social_app/profile/layout/profile_provder_page.dart';
 import 'package:my_social_app/user/data/models/user.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -22,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final _pages = [
     PostProviderPage(),
     ChatProviderPage(),
-    ProfilePage(),
+    ProfileProviderPage(),
   ];
 
   final titles = ['Post', 'Chat', 'Profile'];
