@@ -17,12 +17,34 @@ class MessageScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Message Screen'),
+        title: chatDetail.creator.uid != currentUser.uid
+            ? Text(chatDetail.creator.displayName)
+            : Text(chatDetail.participent.displayName),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            FocusScope.of(context).unfocus();
+            Navigator.pop(context);
+          },
+        ),
+        actions: <Widget>[
+          FittedBox(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: CircleAvatar(
+                backgroundImage: chatDetail.creator.uid != currentUser.uid
+                    ? NetworkImage(chatDetail.creator.photoUrl)
+                    : NetworkImage(chatDetail.participent.photoUrl),
+              ),
+            ),
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height - 75,
           width: MediaQuery.of(context).size.width,
+          color: Theme.of(context).primaryColor,
           child: Column(
             children: <Widget>[
               Expanded(

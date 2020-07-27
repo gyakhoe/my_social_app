@@ -9,11 +9,11 @@ class UserSearchFieldWidget extends StatelessWidget {
       child: BlocBuilder<SearchBloc, SearchState>(
         builder: (context, state) {
           if (state is SearchTextEntering) {
-            return _buildSearchTextField(Icons.close, context);
+            return UserSearchTextField(icon: Icons.close);
           } else if (state is SearchTextEntered) {
-            return _buildSearchTextField(Icons.close, context);
+            return UserSearchTextField(icon: Icons.close);
           } else {
-            return _buildSearchTextField(Icons.search, context);
+            return UserSearchTextField(icon: Icons.search);
           }
         },
       ),
@@ -21,30 +21,67 @@ class UserSearchFieldWidget extends StatelessWidget {
   }
 }
 
-Widget _buildSearchTextField(IconData icon, BuildContext context) {
-  return Row(
-    children: <Widget>[
-      Expanded(
-        flex: 9,
-        child: TextField(
-            onTap: () =>
-                BlocProvider.of<SearchBloc>(context).add(SearchSelected()),
-            onSubmitted: (value) => BlocProvider.of<SearchBloc>(context)
-                .add(SearchTextEntered(value)),
-            decoration: InputDecoration(
-              hintText: 'Type username here.',
-              border: OutlineInputBorder(
-                borderSide: BorderSide.none,
-              ),
+class UserSearchTextField extends StatefulWidget {
+  final IconData icon;
+  UserSearchTextField({
+    Key key,
+    this.icon,
+  }) : super(key: key);
+
+  @override
+  _UserSearchTextFieldState createState() => _UserSearchTextFieldState();
+}
+
+class _UserSearchTextFieldState extends State<UserSearchTextField> {
+  TextEditingController textEditingController;
+
+  @override
+  void initState() {
+    super.initState();
+    textEditingController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    textEditingController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Expanded(
+          flex: 9,
+          child: TextField(
+              controller: textEditingController,
+              onTap: () =>
+                  BlocProvider.of<SearchBloc>(context).add(SearchSelected()),
+              onChanged: (value) {
+                BlocProvider.of<SearchBloc>(context)
+                    .add(SearchTextEntered(value));
+              },
+              onSubmitted: (value) {
+                FocusScope.of(context).unfocus();
+                textEditingController.clear();
+                BlocProvider.of<SearchBloc>(context).add(SearchCancelled());
+              },
+              autocorrect: false,
+              decoration: InputDecoration(
+                hintText: 'Type username here.',
+                border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                ),
+              )),
+        ),
+        Expanded(
+            flex: 1,
+            child: SearchIconButton(
+              icon: widget.icon,
             )),
-      ),
-      Expanded(
-          flex: 1,
-          child: SearchIconButton(
-            icon: icon,
-          )),
-    ],
-  );
+      ],
+    );
+  }
 }
 
 class SearchIconButton extends StatelessWidget {

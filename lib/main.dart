@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_social_app/app_firebase/data/repositories/firebase_repository.dart';
 import 'package:my_social_app/authentication/bloc/authentication_bloc.dart';
@@ -40,6 +41,10 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return BlocProvider(
       create: (context) => AuthenticationBloc(userRepository: _userRepository)
         ..add(AuthenticationStarted()),
@@ -47,8 +52,26 @@ class App extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'My Social App',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
+          primaryColor: Colors.black,
+          brightness: Brightness.dark,
+          primaryTextTheme: TextTheme(
+            bodyText1: TextStyle(color: Colors.white),
+            bodyText2: TextStyle(color: Colors.white),
+            headline1: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          accentColor: Colors.white,
+          accentTextTheme: TextTheme(
+            bodyText1: TextStyle(color: Colors.black),
+            bodyText2: TextStyle(color: Colors.black),
+            headline1: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
         home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
           builder: _buildWidgetBasedOnState,

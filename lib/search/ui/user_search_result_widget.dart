@@ -52,6 +52,7 @@ class _UserSearchResultWidgetState extends State<UserSearchResultWidget> {
   _buildTempResultWidget({Widget child}) {
     return Container(
       height: MediaQuery.of(context).size.height * 0.1,
+      padding: EdgeInsets.all(5),
       child: Center(child: child),
     );
   }

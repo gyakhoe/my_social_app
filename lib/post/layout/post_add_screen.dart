@@ -77,7 +77,6 @@ class _PostAddScreenState extends State<PostAddScreen> {
               Container(
                 height: MediaQuery.of(context).size.height * 0.5,
                 width: MediaQuery.of(context).size.width,
-                color: Colors.pink,
                 child: Image.file(
                   widget._selectedImage,
                   fit: BoxFit.cover,
@@ -88,6 +87,8 @@ class _PostAddScreenState extends State<PostAddScreen> {
               ),
               TextField(
                 controller: captionController,
+                minLines: 1,
+                maxLines: 5,
                 decoration: InputDecoration(
                   hintText: 'Caption',
                   border: OutlineInputBorder(

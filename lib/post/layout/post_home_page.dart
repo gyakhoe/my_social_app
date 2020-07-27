@@ -21,6 +21,7 @@ class PostHomePage extends StatelessWidget {
             Container(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
+              color: Theme.of(context).primaryColor,
               child: BlocBuilder<PostBloc, PostState>(
                 builder: _postBlocBuilder,
               ),
