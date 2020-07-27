@@ -24,11 +24,14 @@ class ChatPage extends StatelessWidget {
                       )));
         }
       },
-      child: Column(
-        children: <Widget>[
-          ChatSearchWidget(),
-          ConversationBuilderWidget(),
-        ],
+      child: Container(
+        color: Theme.of(context).primaryColor,
+        child: Column(
+          children: <Widget>[
+            ChatSearchWidget(),
+            ConversationBuilderWidget(),
+          ],
+        ),
       ),
     );
   }

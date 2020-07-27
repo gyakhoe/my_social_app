@@ -33,7 +33,7 @@ class _MessageTypeFieldWidgetState extends State<MessageTypeFieldWidget> {
     return Container(
       height: double.infinity,
       width: double.infinity,
-      color: Colors.teal,
+      color: Theme.of(context).primaryColorDark,
       child: Row(
         children: <Widget>[
           Expanded(
@@ -41,8 +41,11 @@ class _MessageTypeFieldWidgetState extends State<MessageTypeFieldWidget> {
             child: Container(
               padding: EdgeInsets.all(10),
               child: TextField(
+                minLines: 1,
+                maxLines: 2,
                 controller: messageTextController,
                 decoration: InputDecoration(
+                  hintText: 'Type here',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(25),
                   ),
@@ -59,16 +62,18 @@ class _MessageTypeFieldWidgetState extends State<MessageTypeFieldWidget> {
             child: IconButton(
               icon: Icon(
                 Icons.send,
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).accentColor,
               ),
               onPressed: () {
-                BlocProvider.of<MessageBloc>(context).add(MessageTextSent(
-                    chatDetail: widget.chatDetail,
-                    messageText: messageTextController.text));
+                if (messageTextController.text.isNotEmpty) {
+                  BlocProvider.of<MessageBloc>(context).add(MessageTextSent(
+                      chatDetail: widget.chatDetail,
+                      messageText: messageTextController.text));
 
-                setState(() {
-                  messageTextController.clear();
-                });
+                  setState(() {
+                    messageTextController.clear();
+                  });
+                }
               },
             ),
           ),

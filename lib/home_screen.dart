@@ -33,6 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: titles[_pageIndex],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Theme.of(context).primaryColor,
         currentIndex: _pageIndex,
         onTap: (selectedIndex) {
           setState(() {
@@ -41,8 +42,6 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         showSelectedLabels: true,
         showUnselectedLabels: false,
-        unselectedItemColor: Colors.grey,
-        selectedItemColor: Theme.of(context).primaryColor,
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.add_to_photos),

@@ -15,6 +15,7 @@ class PostWidget extends StatelessWidget {
       child: Container(
           height: MediaQuery.of(context).size.height * 0.7,
           width: MediaQuery.of(context).size.width,
+          padding: EdgeInsets.all(5),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -64,6 +65,7 @@ class PostWidget extends StatelessWidget {
       child: Container(
         height: double.infinity,
         width: double.infinity,
+        padding: EdgeInsets.only(bottom: 5),
         child: FadeInImage(
           placeholder: AssetImage('assets/images/Curve-Loading.gif'),
           image: NetworkImage(_post.photoUrl),
@@ -88,15 +90,12 @@ class PostWidget extends StatelessWidget {
                       TextSpan(
                         text: _post.userName,
                         style: TextStyle(
-                          color: Colors.black,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       TextSpan(
                         text: ' ${_post.caption}',
-                        style: TextStyle(
-                          color: Colors.black,
-                        ),
+                        style: TextStyle(),
                       ),
                     ],
                   ),

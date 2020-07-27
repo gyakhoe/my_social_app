@@ -15,6 +15,7 @@ class ProfilePage extends StatelessWidget {
     return Container(
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
+      color: Theme.of(context).primaryColor,
       child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
           builder: (context, state) {
         if (state is AuthenticationSuccess) {
@@ -84,47 +85,45 @@ class ProfilePage extends StatelessWidget {
   }
 
   Widget _buildUserDetail(User user, BuildContext context) {
-    return Card(
-      elevation: 5,
-      child: Container(
-        height: MediaQuery.of(context).size.height * 0.2,
-        child: Row(
-          children: <Widget>[
-            Container(
-              width: MediaQuery.of(context).size.width * 0.3,
-              child: Center(
-                child: CircleAvatar(
-                  radius: 50,
-                  backgroundImage: NetworkImage(user.photoUrl),
-                ),
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.2,
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            flex: 3,
+            child: Center(
+              child: CircleAvatar(
+                radius: 50,
+                backgroundImage: NetworkImage(user.photoUrl),
               ),
             ),
-            Container(
-              width: MediaQuery.of(context).size.width * 0.6,
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    _buildInfoDetail(
-                        lable: 'Name',
-                        data: user.displayName,
-                        screenWidth: MediaQuery.of(context).size.width * 0.6),
-                    _buildInfoDetail(
-                        lable: 'email',
-                        data: user.email,
-                        screenWidth: MediaQuery.of(context).size.width * 0.6),
-                    _buildInfoDetail(
-                      lable: 'UID: ',
-                      data: user.uid,
-                      screenWidth: MediaQuery.of(context).size.width * 0.6,
-                    ),
-                  ],
-                ),
+          ),
+          Expanded(
+            flex: 7,
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  _buildInfoDetail(
+                      lable: 'Name',
+                      data: user.displayName,
+                      screenWidth: MediaQuery.of(context).size.width * 0.6),
+                  _buildInfoDetail(
+                      lable: 'email',
+                      data: user.email,
+                      screenWidth: MediaQuery.of(context).size.width * 0.6),
+                  _buildInfoDetail(
+                    lable: 'UID: ',
+                    data:
+                        'XXXXX-${user.uid.substring(user.uid.length - 5, user.uid.length)}',
+                    screenWidth: MediaQuery.of(context).size.width * 0.6,
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
