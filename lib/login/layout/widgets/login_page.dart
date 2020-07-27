@@ -17,6 +17,7 @@ class LoginPage extends StatelessWidget {
       child: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
+        color: Theme.of(context).primaryColor,
         child: Center(
           child: _buildLoginWidget(context),
         ),
@@ -42,7 +43,7 @@ class LoginPage extends StatelessWidget {
 
   Widget _buildLoginWithGoogleButton(BuildContext context) {
     return FlatButton(
-      color: Theme.of(context).primaryColor,
+      color: Colors.grey[700],
       child: Container(
         width: MediaQuery.of(context).size.width * 0.5,
         height: MediaQuery.of(context).size.height * 0.07,
