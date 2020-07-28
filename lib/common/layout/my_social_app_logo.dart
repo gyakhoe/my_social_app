@@ -53,7 +53,7 @@ class MySocialAppLogo extends StatelessWidget {
                     bottom: -40,
                     right: 0,
                     child: Text(
-                      'C',
+                      'A',
                       style: GoogleFonts.monoton(fontSize: 150),
                     ),
                   ),
